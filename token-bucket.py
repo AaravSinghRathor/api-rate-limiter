@@ -24,9 +24,10 @@ class TokenBucket:
 
     def refill_token(self, current_time):
         diff = int((current_time - self.last_refill_time).total_seconds())
-        refill_count = diff // self.interval
-        self.current_tokens = min(self.capacity, self.current_tokens + refill_count * self.refill_tokens)
-        self.last_refill_time = current_time
+        if diff >= self.interval:
+            refill_count = diff // self.interval
+            self.current_tokens = min(self.capacity, self.current_tokens + refill_count * self.refill_tokens)
+            self.last_refill_time = current_time
 
 
 def main():
